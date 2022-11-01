@@ -1,0 +1,2 @@
+# myownproject
+Php and smarty
