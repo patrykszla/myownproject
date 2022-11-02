@@ -21,16 +21,26 @@
                         <th scope="col">Autor</th>
                         <th scope="col">Liczba stron</th>
                         <th scope="col">Rok wydania</th>
+                        <th scope="col">Akcja</th>
                     </tr>
                 </thead>
                 <tbody>
+
                     {foreach item=book name=books from=$books}
-                        <td>{$book.id}</td>
-                        <td>{$book.title}</td>
-                        <td>{$book.author}</td>
-                        <td>{$book.pages}</td>
-                        <td>{$book.year}</td>
+                        <tr>
+                            <td>{$book.id}</td>
+                            <td>{$book.title}</td>
+                            <td>{$book.author}</td>
+                            <td>{$book.pages}</td>
+                            <td>{$book.year}</td>
+                            <td class="">
+                            <a href="?page=read"><i class="bi bi-eye"></i></a>
+                            <a href="?page=edit"><i class="bi bi-pencil"></i></a>
+                            <a href="#"><i class="bi bi-trash3"></i></a>
+                            </td>
+                        </tr>
                     {/foreach}
+
                 </tbody>
             </table>
         </div>

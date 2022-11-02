@@ -25,6 +25,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : '';
 print($page);
 $smarty->assign('page', $page);
 
+print_r($_POST);
 $project = new Book();
 
 switch ($page) {
@@ -40,6 +41,16 @@ switch ($page) {
     case 'addnewbook':
         $smarty->assign('title', 'Dodaj nową ksiązkę');
         $smarty->display('addnewbook.tpl');
+        break;
+
+    case 'read':
+        $smarty->assign('title', 'Szczegóły ksiązki');
+        $smarty->display('read.tpl');
+        break;
+
+    case 'edit':
+        $smarty->assign('title', 'Edycja książki');
+        $smarty->display('edit.tpl');
         break;
 
     default:
