@@ -22,12 +22,19 @@ require_once 'inc/book.class.php';
 // $smarty->display('index.tpl');
 // $smarty->display('books.tpl');
 $page = isset($_GET['page']) ? $_GET['page'] : '';
-print($page);
+// print($page);
+
 $smarty->assign('page', $page);
 
-print_r($_POST);
+// print_r($_POST);
 $project = new Book();
 
+
+if($_SERVER["REQUEST_METHOD"] == "POST")
+{
+    $project->validateForm($_POST);
+    print_r($_POST);
+}
 switch ($page) {
     case 'books':
         // $search = (isset($_POST['search'])) ? trim(strip_tags($_POST['search'])) : '';
