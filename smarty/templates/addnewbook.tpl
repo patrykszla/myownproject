@@ -5,7 +5,7 @@
 <div class="container-fluid d-flex justify-content-center">
 
 
-    <form action="" method="post" class="col-md-5">
+    <form action="" method="post" enctype="multipart/form-data" class="col-md-5">
         <legend class="text-center">Dodaj książke</legend>
         <div class="form-group row">
             <label for="addTitle" class="col-sm-3 col-form-label">Tytuł</label>
@@ -31,6 +31,13 @@
                 <input type="number" id="releaseDate" class="form-control" name="releaseDate" placeholder="Rok publikacji">
             </div>
         </div>
+        <div class="form-group row mt-2">
+            <label for="bookImage" class="col-sm-3 col-form-label">Okładka</label>
+            <div class="col-sm-9">
+                <input type="file" id="bookImage" class="form-control" name="bookImage" value="plik">
+            </div>
+        </div>
+
 
         <div class="row justify-content-center mt-2">
 

@@ -19,12 +19,29 @@ class Book extends MyDb
         return $data;
     }
 
-    public function validateForm($post)
+    private function validateForm($post)
     {
         $valuesArr = [];
         $errorArr = [];
-        $titleErr = $authorErr = $pagesErr = $dataErr = '';
-        $title = $author = $pages = $data = '';
+        // $valErrArr = [];
+        $titleErr = $authorErr = $pagesErr = $dateErr = '';
+        $title = $author = $pages = $date = $image = '';
+        // var_dump($_FILES);
+        $allowed_image_extension = array(
+            "png",
+            "jpg",
+            "jpeg"
+        );
+        $file_name = $_FILES['bookImage']['name'];
+        $tmp_name = $_FILES['bookImage']['tmp_name'];
+        echo $file_name;
+        echo $tmp_name;
+        // $file_name = $_FILES['file']['name'];
+        // $tmp_name = $_FILES['file']['tmp_name'];
+        // echo $file_name;
+        // echo "<br/>";
+        // echo $tmp_name;
+
         if (empty($post['addTitle'])) {
             $titleError = "Uzupełnij pole tytuł";
             $error = array_push($errorArr, $titleError);
@@ -36,8 +53,8 @@ class Book extends MyDb
                 $error = array_push($errorArr, $titleErr);
                 echo $titleErr;
             } else {
-                $valuesArr['bookTitle'] = $title;
-                print_r($valuesArr);
+                $valuesArr['title'] = $title;
+                // print_r($valuesArr);
             }
         }
 
@@ -52,15 +69,38 @@ class Book extends MyDb
                 $error = array_push($errorArr, $authorErr);
                 echo $authorErr;
             } else {
-                $valuesArr['bookTitle'] = $author;
-                print_r($valuesArr);
+                // $value = array_push($valuesArr, $author);
+                $valuesArr['author'] = $author;
+                // print_r($valuesArr);
             }
         }
-        
 
+        if (empty($post['totalPages'])) {
+            $pagesErr = 'Uzupełnij pole liczba stron';
+            $error = array_push($errorArr, $pagesErr);
+        } else {
+            $pages = intval($this->inputData($post['totalPages']));
+            $valuesArr['pages'] = $pages;
+        }   
+
+        if (empty($post['releaseDate'])) {
+            $dateErr = 'Uzupełnij pole rok publikacji';
+            $error = array_push($errorArr, $dateErr);
+        } else {
+            $date = intval($this->inputData($post['releaseDate']));
+            $valuesArr['date'] = $date;
+        }   
+        // return compact($valErrArr, $valuesArr );
+        if (empty($errorArr)) {
+            return $valuesArr;
+        } else {
+            return $errorArr;
+        }
+        // return $valuesArr;
     }
     public function addBook($book)
     {
+        var_dump($this->validateForm($book));
         // print_r($book);
 
         // print($bookTitle);

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.2.1, created on 2022-11-03 20:08:06
+/* Smarty version 4.2.1, created on 2022-11-05 16:57:05
   from 'C:\xampp_new\htdocs\myownproject\smarty\templates\addnewbook.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.2.1',
-  'unifunc' => 'content_63641196ac6789_47724692',
+  'unifunc' => 'content_636687d13a7a31_89655835',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '629d1ffe10561b42faceddd0f5a88f37d6ad1fd2' => 
     array (
       0 => 'C:\\xampp_new\\htdocs\\myownproject\\smarty\\templates\\addnewbook.tpl',
-      1 => 1667502485,
+      1 => 1667663822,
       2 => 'file',
     ),
   ),
@@ -24,7 +24,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:footer.tpl' => 1,
   ),
 ),false)) {
-function content_63641196ac6789_47724692 (Smarty_Internal_Template $_smarty_tpl) {
+function content_636687d13a7a31_89655835 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 $_smarty_tpl->_subTemplateRender("file:js.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 $_smarty_tpl->_subTemplateRender("file:nav.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
@@ -33,7 +33,7 @@ $_smarty_tpl->_subTemplateRender("file:nav.tpl", $_smarty_tpl->cache_id, $_smart
 <div class="container-fluid d-flex justify-content-center">
 
 
-    <form action="" method="post" class="col-md-5">
+    <form action="" method="post" enctype="multipart/form-data" class="col-md-5">
         <legend class="text-center">Dodaj książke</legend>
         <div class="form-group row">
             <label for="addTitle" class="col-sm-3 col-form-label">Tytuł</label>
@@ -59,6 +59,13 @@ $_smarty_tpl->_subTemplateRender("file:nav.tpl", $_smarty_tpl->cache_id, $_smart
                 <input type="number" id="releaseDate" class="form-control" name="releaseDate" placeholder="Rok publikacji">
             </div>
         </div>
+        <div class="form-group row mt-2">
+            <label for="bookImage" class="col-sm-3 col-form-label">Okładka</label>
+            <div class="col-sm-9">
+                <input type="file" id="bookImage" class="form-control" name="bookImage" value="plik">
+            </div>
+        </div>
+
 
         <div class="row justify-content-center mt-2">
 
