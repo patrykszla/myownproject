@@ -35,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     // $project->validateForm($_POST);
     $project->addBook($_POST);
     echo "<br />";
-    print_r($_POST);
+    // print_r($_POST);
 }
 switch ($page) {
     case 'books':

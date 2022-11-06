@@ -1,7 +1,7 @@
 <?php
-class MyDb
+abstract class MyDb
 {
-    private $db_pdo;
+    public $db_pdo;
 
     public function __construct()
     {
@@ -30,7 +30,7 @@ class MyDb
         $this->db_pdo = NULL;
     }
 
-    public function myQuery(string $sql) : array
+    public function myQuery(string $sql): array
     {
         return $this->db_pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }

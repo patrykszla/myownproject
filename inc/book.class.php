@@ -23,24 +23,8 @@ class Book extends MyDb
     {
         $valuesArr = [];
         $errorArr = [];
-        // $valErrArr = [];
-        $titleErr = $authorErr = $pagesErr = $dateErr = '';
+        $titleErr = $authorErr = $pagesErr = $dateErr = $imageErr = '';
         $title = $author = $pages = $date = $image = '';
-        // var_dump($_FILES);
-        $allowed_image_extension = array(
-            "png",
-            "jpg",
-            "jpeg"
-        );
-        $file_name = $_FILES['bookImage']['name'];
-        $tmp_name = $_FILES['bookImage']['tmp_name'];
-        echo $file_name;
-        echo $tmp_name;
-        // $file_name = $_FILES['file']['name'];
-        // $tmp_name = $_FILES['file']['tmp_name'];
-        // echo $file_name;
-        // echo "<br/>";
-        // echo $tmp_name;
 
         if (empty($post['addTitle'])) {
             $titleError = "Uzupełnij pole tytuł";
@@ -48,13 +32,12 @@ class Book extends MyDb
             echo ($titleError);
         } else {
             $title = $this->inputData($post['addTitle']);
-            if (!preg_match("/^[a-zA-Z ]*$/", $title)) {
+            if (!preg_match("/([a-zA-Z0-9])/", $title)) {
                 $titleErr = "Dozwolone tylko litery i białe znaki";
                 $error = array_push($errorArr, $titleErr);
                 echo $titleErr;
             } else {
                 $valuesArr['title'] = $title;
-                // print_r($valuesArr);
             }
         }
 
@@ -69,41 +52,118 @@ class Book extends MyDb
                 $error = array_push($errorArr, $authorErr);
                 echo $authorErr;
             } else {
-                // $value = array_push($valuesArr, $author);
                 $valuesArr['author'] = $author;
-                // print_r($valuesArr);
             }
         }
 
         if (empty($post['totalPages'])) {
             $pagesErr = 'Uzupełnij pole liczba stron';
             $error = array_push($errorArr, $pagesErr);
+        } elseif (!is_numeric($this->inputData($post['totalPages']))) {
+            $pagesErr = 'Ilość stron musi być liczbą!';
+            $error = array_push($errorArr, $pagesErr);
         } else {
             $pages = intval($this->inputData($post['totalPages']));
             $valuesArr['pages'] = $pages;
-        }   
+        }
+
+
 
         if (empty($post['releaseDate'])) {
             $dateErr = 'Uzupełnij pole rok publikacji';
             $error = array_push($errorArr, $dateErr);
+        } elseif (!is_numeric($post['releaseDate'])) {
+            $dateErr = 'Rok musi być liczbą!';
+            $error = array_push($errorArr, $dateErr);
         } else {
             $date = intval($this->inputData($post['releaseDate']));
             $valuesArr['date'] = $date;
-        }   
-        // return compact($valErrArr, $valuesArr );
-        if (empty($errorArr)) {
-            return $valuesArr;
-        } else {
-            return $errorArr;
         }
+
+
+        if (empty($_FILES)) {
+            $imageErr = 'Dodaj zdjęcie!';
+            $error = array_push($errorArr, $imageErr);
+        } else {
+            $allowed_image_extension = array(
+                "png",
+                "jpg",
+                "jpeg"
+            );
+            $file_name = $_FILES['bookImage']['name'];
+            $tmp_name = $_FILES['bookImage']['tmp_name'];
+            $upload_dir = 'assets/images/';
+            $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+            if (!in_array($file_extension, $allowed_image_extension)) {
+                $imageErr = 'Dozwolone tylko formaty pliku PNG, JPG JPEG';
+                $error = array_push($errorArr, $imageErr);
+            } else {
+                $imageName = rand(1000, 100000) . "." . $file_extension;
+                $image = [
+                    'imageName' => $imageName,
+                    'tmp_name' => $tmp_name,
+                    'upload_dir' => $upload_dir
+                ];
+                $valuesArr['image'] = $image;
+            }
+        }
+        $retArray = [
+            "errorArr" => $errorArr,
+            "valuesArr" => $valuesArr
+        ];
+        // return compact($valErrArr, $valuesArr );
+        // if (empty($errorArr)) {
+        //     return $valuesArr;
+        // } else {
+        //     return $errorArr;
+        // }
         // return $valuesArr;
+        return $retArray;
     }
     public function addBook($book)
     {
-        var_dump($this->validateForm($book));
-        // print_r($book);
 
-        // print($bookTitle);
-        // header("LOCATION: http://localhost/myownproject/?page=start");
+        $returnedArray = $this->validateForm($book);
+        $errorArr = $returnedArray['errorArr'];
+        $valuesArr = $returnedArray['valuesArr'];
+        var_dump($returnedArray);
+        // if (empty($returnedArray['errorArr'])) {
+        //     var_dump($returnedArray['errorArr']);
+        // }
+        // if ( !empty($returnedArray['valuesArr'])) {
+        //     var_dump($returnedArray['valuesArr']);
+        // }
+        // if(!empty($errorArr)) {
+        //     var_dump($errorArr);
+        // }
+        /// SPROBOWAC TEZ Z ARRAY FILTER
+        if (array_filter($errorArr) && !array_filter($valuesArr)) {
+            $imageArr = $valuesArr['image'];
+            var_dump($returnedArray);
+            // var_dump($imageArr);
+            move_uploaded_file($imageArr['tmp_name'], $imageArr['upload_dir'] . $imageArr['imageName']);
+
+            if (file_exists($imageArr['upload_dir'] . $imageArr['imageName'])) {
+                // echo 'plik istnieje';
+                $sql = 'INSERT INTO books (title, author, pages, year, image) VALUES (:title, :author, :pages, :year, :image)';
+                $stmt = $this->db_pdo->prepare($sql);
+                $stmt->bindParam(":title", $valuesArr['title'], PDO::PARAM_STR);
+                $stmt->bindParam("author", $valuesArr['author'], PDO::PARAM_STR);
+                $stmt->bindParam(":pages", $valuesArr['pages'], PDO::PARAM_INT);
+                $stmt->bindParam(":year", $valuesArr['date'], PDO::PARAM_INT);
+                $stmt->bindParam(":image", $imageArr['imageName'], PDO::PARAM_STR);
+                $stmt->execute();
+            }
+            // if (empty($returnedArray['errorArr']) && !empty($returnedArray['valuesArr'])) {
+            //     var_dump($returnedArray);
+
+            //     move_uploaded_file($tmp_name, $upload_dir . $imageName);
+            // }
+            // if (!empty($errorArr))
+            // print_r($book);
+
+            // print($bookTitle);
+            // header("LOCATION: http://localhost/myownproject/?page=start");
+        }
     }
 }
