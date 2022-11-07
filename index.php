@@ -30,8 +30,7 @@ $smarty->assign('page', $page);
 $project = new Book();
 
 
-if($_SERVER["REQUEST_METHOD"] == "POST")
-{
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $project->validateForm($_POST);
     $project->addBook($_POST);
     echo "<br />";
@@ -52,12 +51,9 @@ switch ($page) {
         $smarty->display('addnewbook.tpl');
         break;
 
-    case 'read':
-        $smarty->assign('title', 'Szczegóły ksiązki');
-        $smarty->display('read.tpl');
-        break;
-
     case 'edit':
+        $books = $project->allBooks();
+        $smarty->assign('books', $books);
         $smarty->assign('title', 'Edycja książki');
         $smarty->display('edit.tpl');
         break;

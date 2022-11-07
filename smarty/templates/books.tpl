@@ -3,7 +3,7 @@
 {include file="nav.tpl"}
 
 <div class="container-fluid">
-    <div class="wrapper">
+    <div class="wrapper ">
         <div class="container-fluid">
             <div class="row">
                 <div class="mt-3 col-md-12 d-flex justify-content-between">
@@ -17,6 +17,7 @@
                     <tr>
 
                         <th scope="col">#</th>
+                        <th scope="col">Zdjecie</th>
                         <th scope="col">Tytuł</th>
                         <th scope="col">Autor</th>
                         <th scope="col">Liczba stron</th>
@@ -26,17 +27,18 @@
                 </thead>
                 <tbody>
 
+
                     {foreach item=book name=books from=$books}
                         <tr>
                             <td>{$book.id}</td>
+                            <td><img src="assets/images/{$book.image}" style="height: 70px"></img> </td>
                             <td>{$book.title}</td>
                             <td>{$book.author}</td>
                             <td>{$book.pages}</td>
                             <td>{$book.year}</td>
-                            <td class="">
-                            <a href="?page=read"><i class="bi bi-eye"></i></a>
-                            <a href="?page=edit"><i class="bi bi-pencil"></i></a>
-                            <a href="#"><i class="bi bi-trash3"></i></a>
+                            <td>
+                                <a href="?page=edit&id={$book.id}"><i class="bi bi-pencil"></i></a>
+                                <a href="#"><i class="bi bi-trash3"></i></a>
                             </td>
                         </tr>
                     {/foreach}

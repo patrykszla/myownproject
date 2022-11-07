@@ -137,23 +137,29 @@ class Book extends MyDb
         //     var_dump($errorArr);
         // }
         /// SPROBOWAC TEZ Z ARRAY FILTER
-        if (array_filter($errorArr) && !array_filter($valuesArr)) {
+        if (empty($errorArr) && !empty($valuesArr)) {
             $imageArr = $valuesArr['image'];
             var_dump($returnedArray);
             // var_dump($imageArr);
             move_uploaded_file($imageArr['tmp_name'], $imageArr['upload_dir'] . $imageArr['imageName']);
-
-            if (file_exists($imageArr['upload_dir'] . $imageArr['imageName'])) {
-                // echo 'plik istnieje';
-                $sql = 'INSERT INTO books (title, author, pages, year, image) VALUES (:title, :author, :pages, :year, :image)';
-                $stmt = $this->db_pdo->prepare($sql);
-                $stmt->bindParam(":title", $valuesArr['title'], PDO::PARAM_STR);
-                $stmt->bindParam("author", $valuesArr['author'], PDO::PARAM_STR);
-                $stmt->bindParam(":pages", $valuesArr['pages'], PDO::PARAM_INT);
-                $stmt->bindParam(":year", $valuesArr['date'], PDO::PARAM_INT);
-                $stmt->bindParam(":image", $imageArr['imageName'], PDO::PARAM_STR);
-                $stmt->execute();
+            try {
+                if (file_exists($imageArr['upload_dir'] . $imageArr['imageName'])) {
+                
+                    // echo 'plik istnieje';
+                    $sql = 'INSERT INTO books (title, author, pages, year, image) VALUES (:title, :author, :pages, :year, :image)';
+                    $stmt = $this->db_pdo->prepare($sql);
+                    $stmt->bindParam(":title", $valuesArr['title'], PDO::PARAM_STR);
+                    $stmt->bindParam("author", $valuesArr['author'], PDO::PARAM_STR);
+                    $stmt->bindParam(":pages", $valuesArr['pages'], PDO::PARAM_INT);
+                    $stmt->bindParam(":year", $valuesArr['date'], PDO::PARAM_INT);
+                    $stmt->bindParam(":image", $imageArr['imageName'], PDO::PARAM_STR);
+                    $stmt->execute();
+                }
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+                die();
             }
+            
             // if (empty($returnedArray['errorArr']) && !empty($returnedArray['valuesArr'])) {
             //     var_dump($returnedArray);
 
