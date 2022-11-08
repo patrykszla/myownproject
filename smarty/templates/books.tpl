@@ -37,7 +37,7 @@
                             <td>{$book.pages}</td>
                             <td>{$book.year}</td>
                             <td>
-                                <a href="?page=edit&id={$book.id}"><i class="bi bi-pencil"></i></a>
+                                <a href="?page=edit&book_id={$book.id}"><i class="bi bi-pencil"></i></a>
                                 <a href="#"><i class="bi bi-trash3"></i></a>
                             </td>
                         </tr>

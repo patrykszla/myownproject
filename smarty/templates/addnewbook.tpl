@@ -41,7 +41,7 @@
 
         <div class="row justify-content-center mt-2">
 
-            <button type="submit" class="btn btn-primary col-md-3">Submit</button>
+            <button type="submit" class="btn btn-primary col-md-3">Zatwierdź</button>
 
         </div>
     </form>

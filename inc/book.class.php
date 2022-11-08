@@ -11,6 +11,12 @@ class Book extends MyDb
         );
     }
 
+    public function singleBook($id): array {
+        return $this->myQuery(
+            sql: "SELECT * FROM books WHERE id = $id;"
+        );
+    }
+
     private function inputData($data)
     {
         $data = trim($data);

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.2.1, created on 2022-11-07 21:00:28
+/* Smarty version 4.2.1, created on 2022-11-08 19:45:04
   from 'C:\xampp_new\htdocs\myownproject\smarty\templates\books.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.2.1',
-  'unifunc' => 'content_636963dc0a2283_94005664',
+  'unifunc' => 'content_636aa3b0edd8b2_91132351',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '68ede97907a57c4e80a5faf14de7f70576f389dd' => 
     array (
       0 => 'C:\\xampp_new\\htdocs\\myownproject\\smarty\\templates\\books.tpl',
-      1 => 1667851226,
+      1 => 1667933100,
       2 => 'file',
     ),
   ),
@@ -24,7 +24,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:footer.tpl' => 1,
   ),
 ),false)) {
-function content_636963dc0a2283_94005664 (Smarty_Internal_Template $_smarty_tpl) {
+function content_636aa3b0edd8b2_91132351 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 $_smarty_tpl->_subTemplateRender("file:js.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 $_smarty_tpl->_subTemplateRender("file:nav.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
@@ -77,7 +77,7 @@ $_smarty_tpl->tpl_vars['book']->do_else = false;
                             <td><?php echo $_smarty_tpl->tpl_vars['book']->value['year'];?>
 </td>
                             <td>
-                                <a href="?page=edit&id=<?php echo $_smarty_tpl->tpl_vars['book']->value['id'];?>
+                                <a href="?page=edit&book_id=<?php echo $_smarty_tpl->tpl_vars['book']->value['id'];?>
 "><i class="bi bi-pencil"></i></a>
                                 <a href="#"><i class="bi bi-trash3"></i></a>
                             </td>

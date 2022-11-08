@@ -33,6 +33,8 @@ $project = new Book();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $project->validateForm($_POST);
     $project->addBook($_POST);
+
+
     echo "<br />";
     // print_r($_POST);
 }
@@ -52,9 +54,12 @@ switch ($page) {
         break;
 
     case 'edit':
-        $books = $project->allBooks();
-        $smarty->assign('books', $books);
+        $book = $project->singleBook($_GET['book_id']);
+        var_dump($book);
+        // $books = $project->allBooks();
+        // $smarty->assign('books', $books);
         $smarty->assign('title', 'Edycja książki');
+        $smarty->assign('book', $book);
         $smarty->display('edit.tpl');
         break;
 
