@@ -11,12 +11,14 @@ class Book extends MyDb
         );
     }
 
-    public function singleBook($id): array {
+    public function singleBook($id): array
+    {
         return $this->myQuery(
             sql: "SELECT * FROM books WHERE id = $id;"
         );
     }
 
+   
     private function inputData($data)
     {
         $data = trim($data);
@@ -25,7 +27,11 @@ class Book extends MyDb
         return $data;
     }
 
-    private function validateForm($post)
+    private function validateImage($array) {
+        
+    }
+    
+    private function validateForm($post): array
     {
         $valuesArr = [];
         $errorArr = [];
@@ -35,13 +41,11 @@ class Book extends MyDb
         if (empty($post['addTitle'])) {
             $titleError = "Uzupełnij pole tytuł";
             $error = array_push($errorArr, $titleError);
-            echo ($titleError);
         } else {
             $title = $this->inputData($post['addTitle']);
             if (!preg_match("/([a-zA-Z0-9])/", $title)) {
                 $titleErr = "Dozwolone tylko litery i białe znaki";
                 $error = array_push($errorArr, $titleErr);
-                echo $titleErr;
             } else {
                 $valuesArr['title'] = $title;
             }
@@ -50,13 +54,11 @@ class Book extends MyDb
         if (empty($post['addAuthor'])) {
             $authorError = "Uzupełnij pole autor";
             $error = array_push($errorArr, $authorError);
-            echo ($authorError);
         } else {
             $author = $this->inputData($post['addAuthor']);
             if (!preg_match("/^[a-zA-Z ]*$/", $author)) {
                 $authorErr = "Dozwolone tylko litery i białe znaki ";
                 $error = array_push($errorArr, $authorErr);
-                echo $authorErr;
             } else {
                 $valuesArr['author'] = $author;
             }
@@ -87,33 +89,42 @@ class Book extends MyDb
         }
 
 
-        if (empty($_FILES)) {
-            $imageErr = 'Dodaj zdjęcie!';
-            $error = array_push($errorArr, $imageErr);
-        } else {
-            $allowed_image_extension = array(
-                "png",
-                "jpg",
-                "jpeg"
-            );
-            $file_name = $_FILES['bookImage']['name'];
-            $tmp_name = $_FILES['bookImage']['tmp_name'];
-            $upload_dir = 'assets/images/';
-            $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
-            if (!in_array($file_extension, $allowed_image_extension)) {
-                $imageErr = 'Dozwolone tylko formaty pliku PNG, JPG JPEG';
+
+        if (!isset($post['editId'])) {
+            if (empty($_FILES)) {
+                $imageErr = 'Dodaj zdjęcie!';
                 $error = array_push($errorArr, $imageErr);
             } else {
-                $imageName = rand(1000, 100000) . "." . $file_extension;
-                $image = [
-                    'imageName' => $imageName,
-                    'tmp_name' => $tmp_name,
-                    'upload_dir' => $upload_dir
-                ];
-                $valuesArr['image'] = $image;
+                $allowed_image_extension = array(
+                    "png",
+                    "jpg",
+                    "jpeg"
+                );
+                $file_name = $_FILES['bookImage']['name'];
+                $tmp_name = $_FILES['bookImage']['tmp_name'];
+                $upload_dir = 'assets/images/';
+                $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+                if (!in_array($file_extension, $allowed_image_extension)) {
+                    $imageErr = 'Dozwolone tylko formaty pliku PNG, JPG JPEG';
+                    $error = array_push($errorArr, $imageErr);
+                } else {
+                    $imageName = rand(1000, 100000) . "." . $file_extension;
+                    $image = [
+                        'imageName' => $imageName,
+                        'tmp_name' => $tmp_name,
+                        'upload_dir' => $upload_dir
+                    ];
+                    $valuesArr['image'] = $image;
+                }
             }
         }
-        $retArray = [
+
+
+        if (isset($post['editId'])) {
+            $valuesArr['editId'] = $post['editId'];
+        }
+
+        $returnedArray = [
             "errorArr" => $errorArr,
             "valuesArr" => $valuesArr
         ];
@@ -124,9 +135,9 @@ class Book extends MyDb
         //     return $errorArr;
         // }
         // return $valuesArr;
-        return $retArray;
+        return $returnedArray;
     }
-    public function addBook($book)
+    public function addBook($book): void
     {
 
         $returnedArray = $this->validateForm($book);
@@ -145,12 +156,12 @@ class Book extends MyDb
         /// SPROBOWAC TEZ Z ARRAY FILTER
         if (empty($errorArr) && !empty($valuesArr)) {
             $imageArr = $valuesArr['image'];
-            var_dump($returnedArray);
+            // var_dump($returnedArray);
             // var_dump($imageArr);
             move_uploaded_file($imageArr['tmp_name'], $imageArr['upload_dir'] . $imageArr['imageName']);
             try {
                 if (file_exists($imageArr['upload_dir'] . $imageArr['imageName'])) {
-                
+
                     // echo 'plik istnieje';
                     $sql = 'INSERT INTO books (title, author, pages, year, image) VALUES (:title, :author, :pages, :year, :image)';
                     $stmt = $this->db_pdo->prepare($sql);
@@ -160,12 +171,13 @@ class Book extends MyDb
                     $stmt->bindParam(":year", $valuesArr['date'], PDO::PARAM_INT);
                     $stmt->bindParam(":image", $imageArr['imageName'], PDO::PARAM_STR);
                     $stmt->execute();
+                    print('Udało się');
                 }
             } catch (PDOException $e) {
                 echo $e->getMessage();
                 die();
             }
-            
+
             // if (empty($returnedArray['errorArr']) && !empty($returnedArray['valuesArr'])) {
             //     var_dump($returnedArray);
 
@@ -176,6 +188,16 @@ class Book extends MyDb
 
             // print($bookTitle);
             // header("LOCATION: http://localhost/myownproject/?page=start");
+        } else {
+            print_r($errorArr);
         }
+    }
+
+    public function updateBook($book): void
+    {
+
+        // print("UPDATE BOOOK");
+        $returnedArray = $this->validateForm($book);
+        var_dump($returnedArray);
     }
 }

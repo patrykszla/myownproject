@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="mt-3 col-md-12 d-flex justify-content-between">
                     <h2>Nasze ksiązki</h2>
-                    <a href="?page=addnewbook" class="btn btn-success"><i class="bi bi-plus-lg"></i>Dodaj nową</a>
+                    <a href="?page=addnewbook" class="btn btn-success" style="height:40px;"><i class="bi bi-plus-lg"></i>Dodaj nową</a>
                 </div>
             </div>
 

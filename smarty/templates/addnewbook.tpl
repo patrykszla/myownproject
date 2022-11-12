@@ -40,7 +40,7 @@
 
 
         <div class="row justify-content-center mt-2">
-
+            <input type="hidden">
             <button type="submit" class="btn btn-primary col-md-3">Zatwierdź</button>
 
         </div>

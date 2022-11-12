@@ -32,7 +32,20 @@ $project = new Book();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $project->validateForm($_POST);
-    $project->addBook($_POST);
+    if (isset($_POST['editId'])) {
+        $project->updateBook($_POST);
+    } else {
+        $project->addBook($_POST);
+        // var_dump($_POST);
+        echo "<br />";
+    }
+    // if($_POST['insert'] = 'insert') {
+
+    // } elseif(!empty($_POST['editId'])) {
+    //     $project->updateBook($_POST);
+    // }
+
+    // var_dump($_POST);
 
 
     echo "<br />";
@@ -55,7 +68,7 @@ switch ($page) {
 
     case 'edit':
         $book = $project->singleBook($_GET['book_id']);
-        var_dump($book);
+        // var_dump($book);
         // $books = $project->allBooks();
         // $smarty->assign('books', $books);
         $smarty->assign('title', 'Edycja książki');
