@@ -8,6 +8,9 @@
             <div class="row">
                 <div class="mt-3 col-md-12 d-flex justify-content-between">
                     <h2>Nasze ksiązki</h2>
+                    {if $search != ''}
+                        <h6>Szukana fraza: {$search}</h6>
+                    {/if}
                     <a href="?page=addnewbook" class="btn btn-success" style="height:40px;"><i class="bi bi-plus-lg"></i>Dodaj nową</a>
                 </div>
             </div>

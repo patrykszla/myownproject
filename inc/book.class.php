@@ -17,8 +17,19 @@ class Book extends MyDb
             sql: "SELECT * FROM books WHERE id = $id;"
         );
     }
+    public function search(string $search = ''): array
+    {
+        if ($search != '') {
+            $search = preg_replace('/[^0-9 a-z-!_\\p{L}]/u', '', $search);
+        }
+        return $this->mySearch(
+            sql: "
+        SELECT id, author, title, pages, year, image
+        FROM books WHERE author LIKE ? OR title LIKE ? ORDER BY id ASC;",
+            search: $search
+        );
+    }
 
-   
     private function inputData($data)
     {
         $data = trim($data);
@@ -27,10 +38,11 @@ class Book extends MyDb
         return $data;
     }
 
-    private function validateImage($array) {
-        
+    private function validateImage($array)
+    {
+        // if(isset($_POST))
     }
-    
+
     private function validateForm($post): array
     {
         $valuesArr = [];

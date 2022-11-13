@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.2.1, created on 2022-11-02 12:16:08
+/* Smarty version 4.2.1, created on 2022-11-13 11:19:51
   from 'C:\xampp_new\htdocs\myownproject\smarty\templates\nav.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.2.1',
-  'unifunc' => 'content_63625178ae2522_87818490',
+  'unifunc' => 'content_6370c4c742de55_86246207',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'a0ec767968b920b62954573fd273c2c092a4f996' => 
     array (
       0 => 'C:\\xampp_new\\htdocs\\myownproject\\smarty\\templates\\nav.tpl',
-      1 => 1667387768,
+      1 => 1668334790,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_63625178ae2522_87818490 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6370c4c742de55_86246207 (Smarty_Internal_Template $_smarty_tpl) {
 ?><nav class="navbar navbar-expand-lg navbar-dark navbar-light" style="background-color:#484848">
     <div class="container-fluid d-flex justify-content-center">
         <div class="container d-flex justify-content-between">
@@ -40,10 +40,12 @@ function content_63625178ae2522_87818490 (Smarty_Internal_Template $_smarty_tpl)
                     </li>
                 </ul>
             </div>
-            <form action="" method="post" class="d-inline-flex m-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-success my-2 my-sm-0" type="submit" disabled>Search</button>
+            <form action="" id="form" method="post" class="d-flex">
+                <input class="form-control me-2" type="search" name="search" placeholder="Szukaj" aria-label="szukaj">
+                <button class="btn btn-outline-light" type="submit" disabled>Szukaj</button>
+                <input type="hidden" name="page" value="books">
             </form>
+
         </div>
     </div>
 </nav><?php }

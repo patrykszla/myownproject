@@ -25,6 +25,13 @@ abstract class MyDb
         }
     }
 
+    public function mySearch(string $sql, ?string $search = ''): array
+    {
+        $stmt = $this->db_pdo->prepare($sql);
+        $stmt->execute(["%$search%", "%$search%"]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function __destruct()
     {
         $this->db_pdo = NULL;

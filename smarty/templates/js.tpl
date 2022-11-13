@@ -4,11 +4,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.2/js/bootstrap.min.js"
     integrity="sha512-5BqtYqlWfJemW5+v+TZUs22uigI8tXeVah5S/1Z6qBLVO7gakAOtkOzUtgq6dsIo5c0NJdmGPs0H9I+2OHUHVQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-{* <script>
+<script>
     $(function() {
         $('input:first', '#form').on('input', function() {
             var msg = $(this).val();
             $('button:first', '#form').attr("disabled", (msg.length > 0) ? false : true);
         });
     });
-</script> *}
+</script>

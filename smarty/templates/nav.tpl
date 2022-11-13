@@ -17,10 +17,12 @@
                     </li>
                 </ul>
             </div>
-            <form action="" method="post" class="d-inline-flex m-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-success my-2 my-sm-0" type="submit" disabled>Search</button>
+            <form action="" id="form" method="post" class="d-flex">
+                <input class="form-control me-2" type="search" name="search" placeholder="Szukaj" aria-label="szukaj">
+                <button class="btn btn-outline-light" type="submit" disabled>Szukaj</button>
+                <input type="hidden" name="page" value="books">
             </form>
+
         </div>
     </div>
 </nav>

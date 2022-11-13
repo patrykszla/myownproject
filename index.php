@@ -18,17 +18,10 @@ require_once 'inc/db.class.php';
 require_once 'inc/book.class.php';
 
 
-
-// $smarty->display('index.tpl');
-// $smarty->display('books.tpl');
 $page = isset($_GET['page']) ? $_GET['page'] : '';
-// print($page);
-
 $smarty->assign('page', $page);
 
-// print_r($_POST);
 $project = new Book();
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $project->validateForm($_POST);
@@ -53,9 +46,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 switch ($page) {
     case 'books':
-        // $search = (isset($_POST['search'])) ? trim(strip_tags($_POST['search'])) : '';
-        // print_r($search);
-        $books = $project->allBooks();
+        // var_dump($_POST);
+        $search = (isset($_POST['search'])) ? trim(strip_tags($_POST['search'])) : '';
+        $books = $project->search(search: $search);
+        $searchBooks = $project->search(search: $search);
+        $smarty->assign('search', $search);
+        print_r($search);
+        // $books = $project->allBooks();
         $smarty->assign('books', $books);
         $smarty->assign('title', 'Lista dostępnych książek');
         $smarty->display('books.tpl');
