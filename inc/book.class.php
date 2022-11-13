@@ -4,6 +4,9 @@ declare(strict_types=1);
 class Book extends MyDb
 {
 
+    // public $valuesArr = [];
+    // public $errorArr = []; 
+
     public function allBooks(): array
     {
         return $this->myQuery(
@@ -22,7 +25,7 @@ class Book extends MyDb
         if ($search != '') {
             $search = preg_replace('/[^0-9 a-z-!_\\p{L}]/u', '', $search);
         }
-        return $this->mySearch(
+        return $this->searchFromBooks(
             sql: "
         SELECT id, author, title, pages, year, image
         FROM books WHERE author LIKE ? OR title LIKE ? ORDER BY id ASC;",
@@ -36,11 +39,6 @@ class Book extends MyDb
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
-    }
-
-    private function validateImage($array)
-    {
-        // if(isset($_POST))
     }
 
     private function validateForm($post): array
@@ -87,8 +85,6 @@ class Book extends MyDb
             $valuesArr['pages'] = $pages;
         }
 
-
-
         if (empty($post['releaseDate'])) {
             $dateErr = 'Uzupełnij pole rok publikacji';
             $error = array_push($errorArr, $dateErr);
@@ -100,10 +96,8 @@ class Book extends MyDb
             $valuesArr['date'] = $date;
         }
 
-
-
-        if (!isset($post['editId'])) {
-            if (empty($_FILES)) {
+        if ($_GET['page'] == 'addnewbook') {
+            if ($_FILES['bookImage']['size'] == 0) {
                 $imageErr = 'Dodaj zdjęcie!';
                 $error = array_push($errorArr, $imageErr);
             } else {
@@ -129,42 +123,48 @@ class Book extends MyDb
                     $valuesArr['image'] = $image;
                 }
             }
-        }
-
-
-        if (isset($post['editId'])) {
-            $valuesArr['editId'] = $post['editId'];
+        } elseif ($_GET['page'] == 'edit') {
+            if ($_FILES['bookImage']['size'] != 0 && $_FILES['bookImage']['error'] == 0) {
+                $allowed_image_extension = array(
+                    "png",
+                    "jpg",
+                    "jpeg"
+                );
+                $file_name = $_FILES['bookImage']['name'];
+                $tmp_name = $_FILES['bookImage']['tmp_name'];
+                $upload_dir = 'assets/images/';
+                $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+                if (!in_array($file_extension, $allowed_image_extension)) {
+                    $imageErr = 'Dozwolone tylko formaty pliku PNG, JPG JPEG';
+                    $error = array_push($errorArr, $imageErr);
+                } else {
+                    $imageName = rand(1000, 100000) . "." . $file_extension;
+                    $image = [
+                        'imageName' => $imageName,
+                        'tmp_name' => $tmp_name,
+                        'upload_dir' => $upload_dir
+                    ];
+                    $valuesArr['image'] = $image;
+                }
+            }
         }
 
         $returnedArray = [
             "errorArr" => $errorArr,
             "valuesArr" => $valuesArr
         ];
-        // return compact($valErrArr, $valuesArr );
-        // if (empty($errorArr)) {
-        //     return $valuesArr;
-        // } else {
-        //     return $errorArr;
-        // }
-        // return $valuesArr;
+
         return $returnedArray;
     }
+
     public function addBook($book): void
     {
 
         $returnedArray = $this->validateForm($book);
         $errorArr = $returnedArray['errorArr'];
         $valuesArr = $returnedArray['valuesArr'];
-        var_dump($returnedArray);
-        // if (empty($returnedArray['errorArr'])) {
-        //     var_dump($returnedArray['errorArr']);
-        // }
-        // if ( !empty($returnedArray['valuesArr'])) {
-        //     var_dump($returnedArray['valuesArr']);
-        // }
-        // if(!empty($errorArr)) {
-        //     var_dump($errorArr);
-        // }
+        // var_dump($returnedArray);
+
         /// SPROBOWAC TEZ Z ARRAY FILTER
         if (empty($errorArr) && !empty($valuesArr)) {
             $imageArr = $valuesArr['image'];
@@ -189,17 +189,6 @@ class Book extends MyDb
                 echo $e->getMessage();
                 die();
             }
-
-            // if (empty($returnedArray['errorArr']) && !empty($returnedArray['valuesArr'])) {
-            //     var_dump($returnedArray);
-
-            //     move_uploaded_file($tmp_name, $upload_dir . $imageName);
-            // }
-            // if (!empty($errorArr))
-            // print_r($book);
-
-            // print($bookTitle);
-            // header("LOCATION: http://localhost/myownproject/?page=start");
         } else {
             print_r($errorArr);
         }
@@ -207,9 +196,34 @@ class Book extends MyDb
 
     public function updateBook($book): void
     {
-
-        // print("UPDATE BOOOK");
         $returnedArray = $this->validateForm($book);
+        $errorArr = $returnedArray['errorArr'];
+        $valuesArr = $returnedArray['valuesArr'];
+        $imageStatus = '';
         var_dump($returnedArray);
+
+
+        if (empty($errorArr) && !empty($valuesArr)) {
+            // $imageArr = $valuesArr['image'];
+            if (isset($valuesArr['image']['imageName'])) {
+                var_dump($valuesArr['image']['imageName']);
+            }
+            $id = intval($_GET['book_id']);
+
+            try {
+                $sql = 'UPDATE books SET title = :title, author = :author, pages = :pages, year = :year WHERE id = :id';
+                $stmt = $this->db_pdo->prepare($sql);
+                $stmt->bindParam(":title", $valuesArr['title'], PDO::PARAM_STR);
+                $stmt->bindParam(":author", $valuesArr['author'], PDO::PARAM_STR);
+                $stmt->bindParam(":pages", $valuesArr['pages'], PDO::PARAM_INT);
+                $stmt->bindParam(":year", $valuesArr['date'], PDO::PARAM_INT);
+                $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+                $stmt->execute();
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+                die();
+            }
+        }
     }
 }

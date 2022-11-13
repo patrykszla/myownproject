@@ -25,7 +25,7 @@ abstract class MyDb
         }
     }
 
-    public function mySearch(string $sql, ?string $search = ''): array
+    public function searchFromBooks(string $sql, ?string $search = ''): array
     {
         $stmt = $this->db_pdo->prepare($sql);
         $stmt->execute(["%$search%", "%$search%"]);

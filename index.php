@@ -17,7 +17,7 @@ $smarty->setConfigDir('smarty/configs');
 require_once 'inc/db.class.php';
 require_once 'inc/book.class.php';
 
-
+// print_r($_GET);
 $page = isset($_GET['page']) ? $_GET['page'] : '';
 $smarty->assign('page', $page);
 
@@ -51,7 +51,6 @@ switch ($page) {
         $books = $project->search(search: $search);
         $searchBooks = $project->search(search: $search);
         $smarty->assign('search', $search);
-        print_r($search);
         // $books = $project->allBooks();
         $smarty->assign('books', $books);
         $smarty->assign('title', 'Lista dostępnych książek');

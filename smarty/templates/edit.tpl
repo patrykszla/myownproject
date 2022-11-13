@@ -56,7 +56,7 @@
                 </div>
             </div>
             <div class="col-md-4 mt-2">
-            <img src="assets/images/{$book.0.image}" alt="" style="height:300px;">
+            <img src="assets/images/{$book.0.image}" alt="" style="height:300px; width:100%;">
             </div>
         </div>
     </form>

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.2.1, created on 2022-11-12 21:55:27
+/* Smarty version 4.2.1, created on 2022-11-13 19:55:08
   from 'C:\xampp_new\htdocs\myownproject\smarty\templates\edit.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.2.1',
-  'unifunc' => 'content_6370083f949f64_67044377',
+  'unifunc' => 'content_63713d8cdb3279_67514108',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '2e6e8bd4a34ea68a3e41010ba9eeb7c04ba048a0' => 
     array (
       0 => 'C:\\xampp_new\\htdocs\\myownproject\\smarty\\templates\\edit.tpl',
-      1 => 1668286524,
+      1 => 1668365707,
       2 => 'file',
     ),
   ),
@@ -24,7 +24,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:footer.tpl' => 1,
   ),
 ),false)) {
-function content_6370083f949f64_67044377 (Smarty_Internal_Template $_smarty_tpl) {
+function content_63713d8cdb3279_67514108 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 $_smarty_tpl->_subTemplateRender("file:js.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 $_smarty_tpl->_subTemplateRender("file:nav.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
@@ -90,7 +90,7 @@ $_smarty_tpl->_subTemplateRender("file:nav.tpl", $_smarty_tpl->cache_id, $_smart
             </div>
             <div class="col-md-4 mt-2">
             <img src="assets/images/<?php echo $_smarty_tpl->tpl_vars['book']->value[0]['image'];?>
-" alt="" style="height:300px;">
+" alt="" style="height:300px; width:100%;">
             </div>
         </div>
     </form>

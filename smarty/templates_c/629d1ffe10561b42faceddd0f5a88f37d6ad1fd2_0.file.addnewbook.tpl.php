@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.2.1, created on 2022-11-12 22:15:15
+/* Smarty version 4.2.1, created on 2022-11-13 16:35:06
   from 'C:\xampp_new\htdocs\myownproject\smarty\templates\addnewbook.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.2.1',
-  'unifunc' => 'content_63700ce3b7ba60_24677591',
+  'unifunc' => 'content_63710eaa6dace3_94678334',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '629d1ffe10561b42faceddd0f5a88f37d6ad1fd2' => 
     array (
       0 => 'C:\\xampp_new\\htdocs\\myownproject\\smarty\\templates\\addnewbook.tpl',
-      1 => 1668287610,
+      1 => 1668351991,
       2 => 'file',
     ),
   ),
@@ -24,7 +24,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:footer.tpl' => 1,
   ),
 ),false)) {
-function content_63700ce3b7ba60_24677591 (Smarty_Internal_Template $_smarty_tpl) {
+function content_63710eaa6dace3_94678334 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 $_smarty_tpl->_subTemplateRender("file:js.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 $_smarty_tpl->_subTemplateRender("file:nav.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
@@ -68,7 +68,7 @@ $_smarty_tpl->_subTemplateRender("file:nav.tpl", $_smarty_tpl->cache_id, $_smart
 
 
         <div class="row justify-content-center mt-2">
-            <input type="hidden">
+            <input type="hidden" name="addBook" value="add">
             <button type="submit" class="btn btn-primary col-md-3">Zatwierdź</button>
 
         </div>
