@@ -163,18 +163,14 @@ class Book extends MyDb
         $returnedArray = $this->validateForm($book);
         $errorArr = $returnedArray['errorArr'];
         $valuesArr = $returnedArray['valuesArr'];
-        // var_dump($returnedArray);
 
         /// SPROBOWAC TEZ Z ARRAY FILTER
         if (empty($errorArr) && !empty($valuesArr)) {
             $imageArr = $valuesArr['image'];
-            // var_dump($returnedArray);
-            // var_dump($imageArr);
             move_uploaded_file($imageArr['tmp_name'], $imageArr['upload_dir'] . $imageArr['imageName']);
             try {
                 if (file_exists($imageArr['upload_dir'] . $imageArr['imageName'])) {
 
-                    // echo 'plik istnieje';
                     $sql = 'INSERT INTO books (title, author, pages, year, image) VALUES (:title, :author, :pages, :year, :image)';
                     $stmt = $this->db_pdo->prepare($sql);
                     $stmt->bindParam(":title", $valuesArr['title'], PDO::PARAM_STR);
@@ -199,24 +195,36 @@ class Book extends MyDb
         $returnedArray = $this->validateForm($book);
         $errorArr = $returnedArray['errorArr'];
         $valuesArr = $returnedArray['valuesArr'];
-        $imageStatus = '';
-        var_dump($returnedArray);
-
+        $imageFileName = [];
+        $currentBookImage = $this->singleBook(intval($_GET['book_id']))[0]['image'];
+        
 
         if (empty($errorArr) && !empty($valuesArr)) {
-            // $imageArr = $valuesArr['image'];
             if (isset($valuesArr['image']['imageName'])) {
-                var_dump($valuesArr['image']['imageName']);
+                $imageArr = $valuesArr['image'];
+                // move_uploaded_file($imageArr['tmp_name'], $imageArr['upload_dir'] . $imageArr['imageName']);
+                // $path = './'. $imageArr['upload_dir'] . $currentBookImage;
+                // unlink($path);
+                // $imageFileName = $imageArr['imageName'];
+                array_push($imageFileName, $imageArr['imageName']);
+                // var_dump($imageFileName);
+            } else {
+                array_push($imageFileName, $currentBookImage);
+                // $imageFileName = $currentBookImage;
             }
-            $id = intval($_GET['book_id']);
+            var_dump($imageFileName[0]);
+            // $id = intval($_GET['book_id']);
+            // $imageFileName = $imageArr['imageName'];
+            // var_dump($imageFileName);
 
             try {
-                $sql = 'UPDATE books SET title = :title, author = :author, pages = :pages, year = :year WHERE id = :id';
+                $sql = 'UPDATE books SET title = :title, author = :author, pages = :pages, year = :year, image = :image WHERE id = :id';
                 $stmt = $this->db_pdo->prepare($sql);
                 $stmt->bindParam(":title", $valuesArr['title'], PDO::PARAM_STR);
                 $stmt->bindParam(":author", $valuesArr['author'], PDO::PARAM_STR);
                 $stmt->bindParam(":pages", $valuesArr['pages'], PDO::PARAM_INT);
                 $stmt->bindParam(":year", $valuesArr['date'], PDO::PARAM_INT);
+                $stmt->bindParam('image', $imageFileName[0], PDO::PARAM_STR);
                 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
 
                 $stmt->execute();
