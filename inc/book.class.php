@@ -195,43 +195,54 @@ class Book extends MyDb
         $returnedArray = $this->validateForm($book);
         $errorArr = $returnedArray['errorArr'];
         $valuesArr = $returnedArray['valuesArr'];
-        $imageFileName = [];
         $currentBookImage = $this->singleBook(intval($_GET['book_id']))[0]['image'];
-        
 
         if (empty($errorArr) && !empty($valuesArr)) {
             if (isset($valuesArr['image']['imageName'])) {
                 $imageArr = $valuesArr['image'];
-                // move_uploaded_file($imageArr['tmp_name'], $imageArr['upload_dir'] . $imageArr['imageName']);
-                // $path = './'. $imageArr['upload_dir'] . $currentBookImage;
-                // unlink($path);
-                // $imageFileName = $imageArr['imageName'];
-                array_push($imageFileName, $imageArr['imageName']);
-                // var_dump($imageFileName);
+                move_uploaded_file($imageArr['tmp_name'], $imageArr['upload_dir'] . $imageArr['imageName']);
+                $path = './' . $imageArr['upload_dir'] . $currentBookImage;
+                unlink($path);
+                $imageFileName  = strval($imageArr['imageName']);
+                var_dump($imageFileName);
             } else {
-                array_push($imageFileName, $currentBookImage);
-                // $imageFileName = $currentBookImage;
+                $imageFileName = strval($currentBookImage);
             }
-            var_dump($imageFileName[0]);
-            // $id = intval($_GET['book_id']);
-            // $imageFileName = $imageArr['imageName'];
-            // var_dump($imageFileName);
-
-            try {
-                $sql = 'UPDATE books SET title = :title, author = :author, pages = :pages, year = :year, image = :image WHERE id = :id';
-                $stmt = $this->db_pdo->prepare($sql);
-                $stmt->bindParam(":title", $valuesArr['title'], PDO::PARAM_STR);
-                $stmt->bindParam(":author", $valuesArr['author'], PDO::PARAM_STR);
-                $stmt->bindParam(":pages", $valuesArr['pages'], PDO::PARAM_INT);
-                $stmt->bindParam(":year", $valuesArr['date'], PDO::PARAM_INT);
-                $stmt->bindParam('image', $imageFileName[0], PDO::PARAM_STR);
-                $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-
-                $stmt->execute();
-            } catch (PDOException $e) {
-                echo $e->getMessage();
-                die();
-            }
+            $id = intval($_GET['book_id']);
         }
+        try {
+            $sql = 'UPDATE books SET title = :title, author = :author, pages = :pages, year = :year, image = :image WHERE id = :id';
+            $stmt = $this->db_pdo->prepare($sql);
+            $stmt->bindParam(":title", $valuesArr['title'], PDO::PARAM_STR);
+            $stmt->bindParam(":author", $valuesArr['author'], PDO::PARAM_STR);
+            $stmt->bindParam(":pages", $valuesArr['pages'], PDO::PARAM_INT);
+            $stmt->bindParam(":year", $valuesArr['date'], PDO::PARAM_INT);
+            $stmt->bindParam('image', $imageFileName, PDO::PARAM_STR);
+            $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            die();
+        }
+    }
+
+    public function deleteBook($which = []) :void {
+        // print($id);
+        $book = $this->singleBook($which['bookId']);
+
+        try {
+            $sql = 'DELETE FROM books where id = :id';
+            $stmt = $this->db_pdo->prepare('DELETE FROM books where id = :id');
+            $stmt->bindParam(":id", $which['bookId'], PDO::PARAM_STR);
+            $stmt->execute();
+            $msg = 'Usunałes ksiązkę';
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            die();
+        }
+        var_dump($book);
+        header('Location: http://localhost/myownproject/?page=start');
+        // var_dump( $this->singleBook($id));
     }
 }

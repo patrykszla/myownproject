@@ -46,12 +46,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 switch ($page) {
     case 'books':
-        // var_dump($_POST);
         $search = (isset($_POST['search'])) ? trim(strip_tags($_POST['search'])) : '';
         $books = $project->search(search: $search);
         $searchBooks = $project->search(search: $search);
         $smarty->assign('search', $search);
-        // $books = $project->allBooks();
         $smarty->assign('books', $books);
         $smarty->assign('title', 'Lista dostępnych książek');
         $smarty->display('books.tpl');
@@ -64,12 +62,26 @@ switch ($page) {
 
     case 'edit':
         $book = $project->singleBook($_GET['book_id']);
-        // var_dump($book);
-        // $books = $project->allBooks();
-        // $smarty->assign('books', $books);
         $smarty->assign('title', 'Edycja książki');
         $smarty->assign('book', $book);
         $smarty->display('edit.tpl');
+        break;
+
+    case 'delete':
+        $bookId = $_GET['book_id'];
+        $book = $project->singleBook($bookId);
+
+        if(isset($_POST['submitYes'])) {
+            $project->deleteBook($_POST);
+        } elseif(isset($_POST['submitNo'])) {
+            print("NO");
+            header('Location: http://localhost/myownproject/?page=start');
+        }
+        // var_dump($_POST);
+        // var_dump($book);
+        $smarty->assign('book', $book);
+        $smarty->assign('title', 'Usuwanie książki');
+        $smarty->display('delete.tpl');
         break;
 
     default:
