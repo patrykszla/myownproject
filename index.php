@@ -17,32 +17,19 @@ $smarty->setConfigDir('smarty/configs');
 require_once 'inc/db.class.php';
 require_once 'inc/book.class.php';
 
-// print_r($_GET);
 $page = isset($_GET['page']) ? $_GET['page'] : '';
 $smarty->assign('page', $page);
 
 $project = new Book();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // $project->validateForm($_POST);
     if (isset($_POST['editId'])) {
         $project->updateBook($_POST);
     } else {
         $project->addBook($_POST);
-        // var_dump($_POST);
         echo "<br />";
     }
-    // if($_POST['insert'] = 'insert') {
-
-    // } elseif(!empty($_POST['editId'])) {
-    //     $project->updateBook($_POST);
-    // }
-
-    // var_dump($_POST);
-
-
-    echo "<br />";
-    // print_r($_POST);
+  
 }
 switch ($page) {
     case 'books':
@@ -70,15 +57,10 @@ switch ($page) {
     case 'delete':
         $bookId = $_GET['book_id'];
         $book = $project->singleBook($bookId);
-
-        if(isset($_POST['submitYes'])) {
+        if(!empty($_POST)) {
             $project->deleteBook($_POST);
-        } elseif(isset($_POST['submitNo'])) {
-            print("NO");
-            header('Location: http://localhost/myownproject/?page=start');
         }
-        // var_dump($_POST);
-        // var_dump($book);
+     
         $smarty->assign('book', $book);
         $smarty->assign('title', 'Usuwanie książki');
         $smarty->display('delete.tpl');
@@ -88,5 +70,3 @@ switch ($page) {
         $smarty->assign('title', 'Biblioteka online');
         $smarty->display('index.tpl');
 }
-
-// $smarty->assign('page', $page);
