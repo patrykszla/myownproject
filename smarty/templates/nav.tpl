@@ -8,20 +8,29 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a href="?page=books" class="nav-link">Ksiazki</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="?page=addnewbook" class="nav-link">Dodaj książkę</a>
-                    </li>
+                <ul class="container-fluid navbar-nav mr-auto">
+                    <div class="container-fluid d-flex justify-content-between">
+                        <div class="d-flex justify-content-center">
+                            <li class="nav-item">
+                                <a href="?page=books" class="nav-link">Ksiazki</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="?page=addnewbook" class="nav-link">Dodaj książkę</a>
+                            </li>
+                        </div>
+                        <div>
+                            <li class="nav-item">
+                                <a href="?page=signup" class="nav-link">Rejestracja</a>
+                            </li>
+                        </div>
+                    </div>
                 </ul>
             </div>
-            <form action="" id="form" method="post" class="d-flex">
+            {* <form action="" id="form" method="post" class="d-flex">
                 <input class="form-control me-2" type="search" name="search" placeholder="Szukaj" aria-label="szukaj">
                 <button class="btn btn-outline-light" type="submit" disabled>Szukaj</button>
                 <input type="hidden" name="page" value="books">
-            </form>
+            </form> *}
 
         </div>
     </div>

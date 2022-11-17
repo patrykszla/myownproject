@@ -6,15 +6,20 @@
     <div class="wrapper ">
         <div class="container-fluid">
             <div class="row">
-                <div class="mt-3 col-md-12 d-flex justify-content-between">
-                    <h2>Nasze ksiązki</h2>
-                    {if $search != ''}
-                        <h6>Szukana fraza: {$search}</h6>
-                    {/if}
-                    <a href="?page=addnewbook" class="btn btn-success" style="height:40px;"><i class="bi bi-plus-lg"></i>Dodaj nową</a>
+                <div class="mt-3 col-md-12 d-flex justify-content-around">
+                <form action="" id="form" method="post" class="d-flex">
+                <input class="form-control me-2" type="search" name="search" placeholder="Szukaj" aria-label="szukaj">
+                <button class="btn btn-primary" type="submit" disabled>Szukaj</button>
+                <input type="hidden" name="page" value="books">
+            </form>
+                    {* <h2>Nasze ksiązki</h2> *}
+                    
+                    <a href="?page=addnewbook" class="btn btn-success" style="height:38px;"><i class="bi bi-plus-lg"></i>Dodaj nową</a>
                 </div>
             </div>
-
+            {if $search != ''}
+                <h6>Szukana fraza: {$search}</h6>
+            {/if}
             <table class="table thead-dark table-striped">
                 <thead>
                     <tr>

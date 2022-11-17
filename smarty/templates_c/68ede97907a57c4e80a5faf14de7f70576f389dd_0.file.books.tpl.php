@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.2.1, created on 2022-11-15 20:08:09
+/* Smarty version 4.2.1, created on 2022-11-17 20:31:18
   from 'C:\xampp_new\htdocs\myownproject\smarty\templates\books.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.2.1',
-  'unifunc' => 'content_6373e399c073d2_49139245',
+  'unifunc' => 'content_63768c060f7b64_57155430',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '68ede97907a57c4e80a5faf14de7f70576f389dd' => 
     array (
       0 => 'C:\\xampp_new\\htdocs\\myownproject\\smarty\\templates\\books.tpl',
-      1 => 1668539284,
+      1 => 1668713475,
       2 => 'file',
     ),
   ),
@@ -24,7 +24,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:footer.tpl' => 1,
   ),
 ),false)) {
-function content_6373e399c073d2_49139245 (Smarty_Internal_Template $_smarty_tpl) {
+function content_63768c060f7b64_57155430 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 $_smarty_tpl->_subTemplateRender("file:js.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 $_smarty_tpl->_subTemplateRender("file:nav.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
@@ -34,16 +34,20 @@ $_smarty_tpl->_subTemplateRender("file:nav.tpl", $_smarty_tpl->cache_id, $_smart
     <div class="wrapper ">
         <div class="container-fluid">
             <div class="row">
-                <div class="mt-3 col-md-12 d-flex justify-content-between">
-                    <h2>Nasze ksiązki</h2>
-                    <?php if ($_smarty_tpl->tpl_vars['search']->value != '') {?>
-                        <h6>Szukana fraza: <?php echo $_smarty_tpl->tpl_vars['search']->value;?>
-</h6>
-                    <?php }?>
-                    <a href="?page=addnewbook" class="btn btn-success" style="height:40px;"><i class="bi bi-plus-lg"></i>Dodaj nową</a>
+                <div class="mt-3 col-md-12 d-flex justify-content-around">
+                <form action="" id="form" method="post" class="d-flex">
+                <input class="form-control me-2" type="search" name="search" placeholder="Szukaj" aria-label="szukaj">
+                <button class="btn btn-primary" type="submit" disabled>Szukaj</button>
+                <input type="hidden" name="page" value="books">
+            </form>
+                                        
+                    <a href="?page=addnewbook" class="btn btn-success" style="height:38px;"><i class="bi bi-plus-lg"></i>Dodaj nową</a>
                 </div>
             </div>
-
+            <?php if ($_smarty_tpl->tpl_vars['search']->value != '') {?>
+                <h6>Szukana fraza: <?php echo $_smarty_tpl->tpl_vars['search']->value;?>
+</h6>
+            <?php }?>
             <table class="table thead-dark table-striped">
                 <thead>
                     <tr>

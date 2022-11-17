@@ -29,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $project->addBook($_POST);
         echo "<br />";
     }
-  
 }
 switch ($page) {
     case 'books':
@@ -57,13 +56,18 @@ switch ($page) {
     case 'delete':
         $bookId = $_GET['book_id'];
         $book = $project->singleBook($bookId);
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             $project->deleteBook($_POST);
         }
-     
+
         $smarty->assign('book', $book);
         $smarty->assign('title', 'Usuwanie książki');
         $smarty->display('delete.tpl');
+        break;
+
+    case 'signup':
+        $smarty->assign('title', 'Rejestracja');
+        $smarty->display('signup.tpl');
         break;
 
     default:
