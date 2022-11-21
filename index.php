@@ -16,20 +16,21 @@ $smarty->setConfigDir('smarty/configs');
 // $smarty->testInstall();
 require_once 'inc/db.class.php';
 require_once 'inc/book.class.php';
+require_once 'inc/user.class.php';
 
 $page = isset($_GET['page']) ? $_GET['page'] : '';
 $smarty->assign('page', $page);
 
 $project = new Book();
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['editId'])) {
-        $project->updateBook($_POST);
-    } else {
-        $project->addBook($_POST);
-        echo "<br />";
-    }
-}
+$user = new User();
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     if (isset($_POST['editId'])) {
+//         $project->updateBook($_POST);
+//     } else {
+//         $project->addBook($_POST);
+//         echo "<br />";
+//     }
+// }
 switch ($page) {
     case 'books':
         $search = (isset($_POST['search'])) ? trim(strip_tags($_POST['search'])) : '';
@@ -42,11 +43,21 @@ switch ($page) {
         break;
 
     case 'addnewbook':
+        if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+            if(isset($_POST['addBook'])) {
+                $project->addBook($_POST);
+            }
+        }
         $smarty->assign('title', 'Dodaj nową ksiązkę');
         $smarty->display('addnewbook.tpl');
         break;
 
     case 'edit':
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST['editId'])) {
+                $project->updateBook($_POST);
+            }
+        }
         $book = $project->singleBook($_GET['book_id']);
         $smarty->assign('title', 'Edycja książki');
         $smarty->assign('book', $book);
@@ -66,6 +77,11 @@ switch ($page) {
         break;
 
     case 'signup':
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            var_dump($_POST);
+            $user->validateForm($_POST);
+            
+        }
         $smarty->assign('title', 'Rejestracja');
         $smarty->display('signup.tpl');
         break;

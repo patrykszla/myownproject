@@ -209,33 +209,35 @@ class Book extends MyDb
                 $imageFileName = strval($currentBookImage);
             }
             $id = intval($_GET['book_id']);
-        }
-        try {
-            $sql = 'UPDATE books SET title = :title, author = :author, pages = :pages, year = :year, image = :image WHERE id = :id';
-            $stmt = $this->db_pdo->prepare($sql);
-            $stmt->bindParam(":title", $valuesArr['title'], PDO::PARAM_STR);
-            $stmt->bindParam(":author", $valuesArr['author'], PDO::PARAM_STR);
-            $stmt->bindParam(":pages", $valuesArr['pages'], PDO::PARAM_INT);
-            $stmt->bindParam(":year", $valuesArr['date'], PDO::PARAM_INT);
-            $stmt->bindParam('image', $imageFileName, PDO::PARAM_STR);
-            $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+            try {
+                $sql = 'UPDATE books SET title = :title, author = :author, pages = :pages, year = :year, image = :image WHERE id = :id';
+                $stmt = $this->db_pdo->prepare($sql);
+                $stmt->bindParam(":title", $valuesArr['title'], PDO::PARAM_STR);
+                $stmt->bindParam(":author", $valuesArr['author'], PDO::PARAM_STR);
+                $stmt->bindParam(":pages", $valuesArr['pages'], PDO::PARAM_INT);
+                $stmt->bindParam(":year", $valuesArr['date'], PDO::PARAM_INT);
+                $stmt->bindParam('image', $imageFileName, PDO::PARAM_STR);
+                $stmt->bindParam(":id", $id, PDO::PARAM_INT);
 
-            $status = $stmt->execute();
+                $status = $stmt->execute();
 
-            if ($status) {
+                if ($status) {
 
-                header('Location: http://localhost/myownproject/?page=books');
+                    header('Location: http://localhost/myownproject/?page=books');
+                }
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+                die();
             }
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            die();
+        } else {
+            print_r($errorArr);
         }
     }
 
     public function deleteBook($post = []): void
     {
         $book = $this->singleBook($post['bookId']);
-    
+
         if (isset($post['submitYes'])) {
             try {
                 $stmt = $this->db_pdo->prepare('DELETE FROM books where id = :id');
@@ -251,9 +253,8 @@ class Book extends MyDb
                 echo $e->getMessage();
                 die();
             }
-        } elseif(isset($post['submitNo'])) {
+        } elseif (isset($post['submitNo'])) {
             header('Location: http://localhost/myownproject/?page=books');
         }
-
     }
 }

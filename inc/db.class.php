@@ -1,20 +1,22 @@
 <?php
+
+require_once './config.php';
+
 abstract class MyDb
 {
     public $db_pdo;
+   
+    // "mysql:host=$db_server;dbname=$db_name",
+    //             $db_user,
+    //             $db_password,
 
     public function __construct()
     {
         try {
-            $db_server = 'localhost';
-            $db_name = 'library';
-            $db_user = 'root';
-            $db_password = '';
-
             $this->db_pdo = new PDO(
-                "mysql:host=$db_server;dbname=$db_name",
-                $db_user,
-                $db_password,
+                "mysql:host=".DB_SERVER.";dbname=".DB_NAME,
+                DB_USER,
+                DB_PASSWORD,
                 [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]
             );
 
