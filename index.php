@@ -78,8 +78,11 @@ switch ($page) {
 
     case 'signup':
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            var_dump($_POST);
-            $user->validateForm($_POST);
+            // var_dump($_POST);
+            // $user->validateForm($_POST);
+            $returned = $user->validateForm($_POST);
+            // var_dump($user->validateForm($_POST));
+            // var_dump($returned['errorArr']);
             
         }
         $smarty->assign('title', 'Rejestracja');

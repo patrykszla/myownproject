@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.2.1, created on 2022-11-17 20:59:01
+/* Smarty version 4.2.1, created on 2022-11-22 20:59:44
   from 'C:\xampp_new\htdocs\myownproject\smarty\templates\signup.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.2.1',
-  'unifunc' => 'content_637692857cb0e9_84503476',
+  'unifunc' => 'content_637d2a3072c864_33278883',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '6912b5a6ff5da4069a826c41bf09db093235fa38' => 
     array (
       0 => 'C:\\xampp_new\\htdocs\\myownproject\\smarty\\templates\\signup.tpl',
-      1 => 1668715140,
+      1 => 1669147172,
       2 => 'file',
     ),
   ),
@@ -24,7 +24,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:footer.tpl' => 1,
   ),
 ),false)) {
-function content_637692857cb0e9_84503476 (Smarty_Internal_Template $_smarty_tpl) {
+function content_637d2a3072c864_33278883 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 $_smarty_tpl->_subTemplateRender("file:js.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 $_smarty_tpl->_subTemplateRender("file:nav.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
@@ -61,9 +61,9 @@ $_smarty_tpl->_subTemplateRender("file:nav.tpl", $_smarty_tpl->cache_id, $_smart
             </div>
         </div>
         <div class="form-group row mt-2">
-        <label for="confirmPassowrd" class="col-sm-3 col-form-label">Potwierdź hasło:</label>
+        <label for="confirmPassword" class="col-sm-3 col-form-label">Potwierdź hasło:</label>
         <div class="col-sm-9">
-            <input type="password" id="confirmPassowrd" class="form-control" name="confirmPassowrd" placeholder="Powtórz hasło">
+            <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" placeholder="Powtórz hasło">
         </div>
     </div>
         <div class="row justify-content-center mt-2">

@@ -34,9 +34,9 @@
             </div>
         </div>
         <div class="form-group row mt-2">
-        <label for="confirmPassowrd" class="col-sm-3 col-form-label">Potwierdź hasło:</label>
+        <label for="confirmPassword" class="col-sm-3 col-form-label">Potwierdź hasło:</label>
         <div class="col-sm-9">
-            <input type="password" id="confirmPassowrd" class="form-control" name="confirmPassowrd" placeholder="Powtórz hasło">
+            <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" placeholder="Powtórz hasło">
         </div>
     </div>
         <div class="row justify-content-center mt-2">

@@ -50,7 +50,7 @@ class Book extends MyDb
         } else {
             $title = $this->inputData($post['addTitle']);
             if (!preg_match("/([a-zA-Z0-9])/", $title)) {
-                $titleErr = "Dozwolone tylko litery i białe znaki";
+                $titleErr = "W polu tytuł dozwolone tylko litery i białe znaki";
                 $error = array_push($errorArr, $titleErr);
             } else {
                 $valuesArr['title'] = $title;
